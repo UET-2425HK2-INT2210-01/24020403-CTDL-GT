@@ -1,0 +1,51 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main () {
+    // Mở file đầu vào để đọc dữ liệu
+    ifstream Input("numbers.txt");
+    // Mở file đầu ra để ghi dữ liệu đã sắp xếp
+    ofstream Output("numbers.sorted.txt");
+    int arr[100]; // Tạo mảng tĩnh lưu trữ các số từ file
+    int count = 0; // Biến đếm số phần tử trong mảng
+
+    // Kiểm tra xem file đầu vào có mở được không
+    if(!Input)
+        cout << "Khong mo duoc file" << endl; // Thông báo lỗi nếu không mở được file
+    else{
+        // Đọc dữ liệu từ file đầu vào và lưu vào mảng
+        while (Input >> arr[count]){
+            count++; // Tăng biến đếm sau mỗi lần đọc
+        }
+
+        // Sắp xếp mảng theo thứ tự tăng dần bằng thuật toán sắp xếp nổi bọt
+        for(int i = 0; i < count; i++){
+            for(int j = i+1; j < count; j++){
+                if(arr[i] >= arr[j]){ // Nếu phần tử trước lớn hơn hoặc bằng phần tử sau
+// Đổi chỗ 2 phần tử
+                    int temp = arr[i]; // Đặt biến tạm bằng phần tử lớn
+                    arr[i] = arr[j]; // Đặt phần tử bé lên vị trí trước
+                    arr[j] = temp; // Đặt phần tử lớn về vị trí sau
+                }
+            }
+        }
+
+        // Ghi kết quả đã sắp xếp vào file đầu ra
+        for(int i = 0; i < count; i++){
+            Output << arr[i] << " "; // Ghi từng phần tử vào file
+        }
+    }
+
+    // Kiểm tra xem file đầu ra có ghi được không
+    if(Output)
+        cout << "Ket qua da duoc in ra file" << endl; // Thông báo thành công
+    else
+        cout << "File khong mo duoc" << endl; // Thông báo lỗi nếu không ghi được file
+
+    // Đóng file đầu vào và file đầu ra
+    Input.close();
+    Output.close();
+
+    return 0; // Kết thúc chương trình
+}
